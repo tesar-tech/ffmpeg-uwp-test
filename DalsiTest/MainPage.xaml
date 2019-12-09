@@ -17,6 +17,6 @@
         </Grid.ColumnDefinitions>
         <MediaPlayerElement x:Name="mpe" Source="ms-appx:///Assets/beru.wmv"
               AreTransportControlsEnabled="True"></MediaPlayerElement>
-        <Button Grid.Column="1" Click="Button_Click">hejh</Button>
+        <Button Grid.Column="1" Click="Button_Click">Get Frames</Button>
     </Grid>
 </Page>

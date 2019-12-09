@@ -32,7 +32,7 @@ namespace DalsiTest
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GetSF();
+            GetSF();//initialize file, stream and frame grabber
         }
 
         private StorageFile currentFile;
@@ -49,19 +49,11 @@ namespace DalsiTest
         private async Task ExtractFrame(TimeSpan position)
         {
             //await Task.Delay(1000);
-            try
-            {
-                var sws = new Stopwatch();
-                sws.Start();
+                //var sws = new Stopwatch();
+                //sws.Start();
                 var frame = await frameGrabber.ExtractVideoFrameAsync(position, true);
-                Debug.WriteLine(sws.ElapsedMilliseconds);
-                frameGrabber.Dispose();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+                //Debug.WriteLine(sws.ElapsedMilliseconds);
+            //read data:
             //var pixData = frame.PixelData.ToArray();
             //Debug.WriteLine(pixData[10500]);
         }
@@ -73,10 +65,10 @@ namespace DalsiTest
             sw.Start();
             int numOfFrames = (int)Math.Floor(mpe.MediaPlayer.PlaybackSession.NaturalDuration.TotalSeconds * 25);
             TimeSpan currentPosition = TimeSpan.Zero;
-            List<Task> tasks = new List<Task>();
+
             for (int i = 0; i < numOfFrames; i++)
             {
-                currentPosition += TimeSpan.FromMilliseconds(1000d / 25d);
+                currentPosition += TimeSpan.FromMilliseconds(1000d / 25d);//every frame
                 await ExtractFrame(currentPosition);
             }
             Debug.WriteLine($"All ({numOfFrames}) in {sw.Elapsed.TotalSeconds} seconds");
