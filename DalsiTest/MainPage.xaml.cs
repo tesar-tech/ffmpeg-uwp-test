@@ -50,48 +50,19 @@ namespace DalsiTest
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             FrameGrabber frameGrabber;
-
             frameGrabber = await FrameGrabber.CreateFromStreamAsync(stream);
-
             sw.Restart();
-            int numOfFrames = (int)Math.Floor(mpe.MediaPlayer.PlaybackSession.NaturalDuration.TotalSeconds * 25);
-            TimeSpan currentPosition = TimeSpan.Zero;
             int counter = 0;
             VideoFrame frame = await frameGrabber.ExtractVideoFrameAsync(TimeSpan.Zero, true);
             do
             {
                 frame = await frameGrabber.ExtractNextVideoFrameAsync();
-
-                //var stream = new InMemoryRandomAccessStream();
-                //stream.Seek(0);
-                //stream.Size = 0;
-                //await frame.EncodeAsPngAsync(stream);
-                //stream.Seek(0);
-
-                //BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-                //var bitmap = await decoder.GetFrameAsync(0);
-                //var swbitmap = await bitmap.GetSoftwareBitmapAsync();
-
-
-                //StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync($"img_{counter.ToString("0000")}.png", CreationCollisionOption.ReplaceExisting);
-
-                //using (var writeStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                //{
-                //    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, writeStream);
-                //    encoder.SetSoftwareBitmap(swbitmap);
-                //    await encoder.FlushAsync();
-
-                //    using (var outputStream = writeStream.GetOutputStreamAt(0))
-                //    {
-                //        await outputStream.FlushAsync();
-                //    }
-                //}
                 Debug.WriteLine($"Frame (#{counter++}) from {frame?.Timestamp.TotalSeconds} sec. Elapsed:{sw.Elapsed.TotalSeconds} seconds");
 
 
             } while (frame != null) ;
 
-            Debug.WriteLine($"All ({numOfFrames}) in {sw.Elapsed.TotalSeconds} seconds");
+            Debug.WriteLine($"All ({counter}) in {sw.Elapsed.TotalSeconds} seconds");
     }
      }
 
